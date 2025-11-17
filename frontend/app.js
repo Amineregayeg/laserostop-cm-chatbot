@@ -150,6 +150,7 @@ async function checkBackendHealth() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Bypass-Tunnel-Reminder': 'true',
             }
         });
 
@@ -218,6 +219,7 @@ async function sendMessage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Bypass-Tunnel-Reminder': 'true',
             },
             body: JSON.stringify(requestBody)
         });
