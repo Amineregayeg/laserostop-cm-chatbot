@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaserOstop CM Chatbot - Testing Interface</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>🔬 LaserOstop CM Chatbot</h1>
+                <p class="subtitle">Testing Interface with Comprehensive Logging</p>
+            </div>
+            <div class="connection-status">
+                <span id="status-indicator" class="status-dot"></span>
+                <span id="status-text">Checking connection...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel: Chat Interface -->
+            <div class="chat-panel">
+                <div class="panel-header">
+                    <h2>💬 Chat Interface</h2>
+                    <button id="clear-chat" class="btn-secondary">Clear Chat</button>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chat-messages" class="chat-messages">
+                    <div class="welcome-message">
+                        <h3>مرحبا بيك في LaserOstop! 👋</h3>
+                        <p>Test the chatbot by asking questions in Tunisian dialect (Derja).</p>
+                        <p><strong>Example questions:</strong></p>
+                        <ul>
+                            <li>شحال prix تع séance laser?</li>
+                            <li>نجم نعمل laser وأنا حامل؟</li>
+                            <li>Laser 3amel kifech?</li>
+                            <li>Nheb nhajer rendez-vous</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <textarea
+                        id="user-input"
+                        placeholder="اكتب سؤالك هنا... / Pose ta question ici..."
+                        rows="3"
+                    ></textarea>
+                    <div class="input-controls">
+                        <button id="send-btn" class="btn-primary">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loading" style="display: none;">Sending...</span>
+                        </button>
+                        <div class="input-options">
+                            <label>
+                                <input type="checkbox" id="use-rag" checked>
+                                Use RAG
+                            </label>
+                            <label>
+                                User ID: <input type="text" id="user-id" value="tester-001" class="small-input">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Logs -->
+            <div class="logs-panel">
+                <div class="panel-header">
+                    <h2>📊 System Logs</h2>
+                    <div class="log-controls">
+                        <button id="clear-logs" class="btn-secondary">Clear Logs</button>
+                        <button id="export-logs" class="btn-secondary">Export Logs</button>
+                    </div>
+                </div>
+
+                <!-- Log Filters -->
+                <div class="log-filters">
+                    <label>
+                        <input type="checkbox" id="filter-fe" checked>
+                        <span class="filter-label frontend">Frontend</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-be" checked>
+                        <span class="filter-label backend">Backend</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-ai" checked>
+                        <span class="filter-label ai">AI/GPT</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filter-error" checked>
+                        <span class="filter-label error">Errors</span>
+                    </label>
+                </div>
+
+                <!-- Log Display -->
+                <div id="log-container" class="log-container">
+                    <div class="log-entry frontend">
+                        <span class="log-timestamp">[00:00:00]</span>
+                        <span class="log-source">[FRONTEND]</span>
+                        <span class="log-message">Testing interface loaded successfully</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Stats Panel -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-label">Total Messages</div>
+                <div class="stat-value" id="stat-messages">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Response Time</div>
+                <div class="stat-value" id="stat-response-time">0ms</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Success Rate</div>
+                <div class="stat-value" id="stat-success-rate">100%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Errors</div>
+                <div class="stat-value error" id="stat-errors">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Tokens</div>
+                <div class="stat-value" id="stat-tokens">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
