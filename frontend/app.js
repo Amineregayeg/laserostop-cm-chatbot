@@ -1,5 +1,5 @@
 // Configuration
-const API_BASE_URL = 'http://134.255.234.188:5000';
+const API_BASE_URL = 'https://laserostop-cm.loca.lt';
 
 // State Management
 const state = {
