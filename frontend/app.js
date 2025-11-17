@@ -204,7 +204,7 @@ async function sendMessage() {
 
         // Prepare request
         const requestBody = {
-            user_text: userText,
+            text: userText,
             user_id: userId || undefined,
             use_rag: useRAG
         };
