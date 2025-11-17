@@ -1,6 +1,6 @@
 # LaserOstop CM Chatbot
 
-A production-ready community manager chatbot backend for **LaserOstop Tunisia**, featuring RAG (Retrieval-Augmented Generation), GPT-4o integration, and comprehensive evaluation framework.
+A production-ready community manager chatbot for **LaserOstop Tunisia**, featuring RAG (Retrieval-Augmented Generation), GPT-5-nano integration, comprehensive evaluation framework, and a full-featured testing interface with detailed logging.
 
 ## Overview
 
@@ -8,13 +8,22 @@ This chatbot serves as an intelligent community manager for LaserOstop Tunisia's
 
 ### Key Features
 
+#### Backend
 - **RAG-Enhanced Responses**: Uses Tunisian dialect social media datasets for context-aware responses
-- **GPT-4o/GPT-4o-mini Integration**: Powered by OpenAI's latest models
+- **GPT-5-nano Integration**: Powered by OpenAI's latest GPT-5-nano model (`gpt-5-nano-2025-08-07`)
 - **Multilingual Support**: Handles Arabic, French, and Tunisian dialect seamlessly
 - **Voice Message Support**: Whisper API integration for audio transcription
 - **Comprehensive Evaluation**: Built-in evaluation framework with quality metrics
 - **Multi-Channel Ready**: Prepared for WhatsApp, Meta (FB/IG), and TikTok integration
 - **Database Logging**: Full conversation tracking and analytics
+
+#### Frontend Testing Interface
+- **Comprehensive Logging**: Real-time logs from Frontend, Backend, AI/GPT, and Errors
+- **Performance Monitoring**: Track response times, token usage, and success rates
+- **Log Filtering**: Toggle visibility of different log sources
+- **Export Functionality**: Export all logs and messages to JSON for analysis
+- **RAG Toggle**: Enable/disable RAG for A/B testing
+- **Modern UI**: Clean, responsive interface supporting Arabic and Latin scripts
 
 ## Architecture
 
@@ -149,17 +158,32 @@ python scripts/build_index.py --reset
 
 ## Running the Application
 
-### Start Flask Development Server
+### Backend Server
+
+Start the Flask backend server:
 
 ```bash
-# Method 1: Using Flask CLI
-flask --app app run
-
-# Method 2: Using Python module
-python -m app
+# Using the run script
+python run.py
 
 # The server will start at http://localhost:5000
 ```
+
+### Frontend Testing Interface
+
+After starting the backend, open the testing interface:
+
+```bash
+# Option 1: Python HTTP Server
+cd frontend
+python -m http.server 8080
+
+# Then open in browser: http://localhost:8080
+```
+
+**Or** simply open `frontend/index.html` directly in your browser.
+
+See [frontend/README.md](frontend/README.md) for detailed testing interface documentation.
 
 ### Production Deployment
 
@@ -302,7 +326,25 @@ comparison = compare_eval_runs(run_id_1=1, run_id_2=2)
 print(comparison)
 ```
 
-## Running Tests
+## Testing
+
+### Frontend Testing Interface
+
+The comprehensive testing interface provides:
+- Real-time chat interface with Tunisian dialect support
+- Complete logging system showing Frontend, Backend, AI, and Error logs
+- Performance metrics (response time, token usage, success rate)
+- Log filtering and export capabilities
+- RAG toggle for A/B testing
+
+**Quick Start:**
+1. Start backend: `python run.py`
+2. Open frontend: `cd frontend && python -m http.server 8080`
+3. Navigate to: `http://localhost:8080`
+
+See [frontend/README.md](frontend/README.md) for complete testing guide.
+
+### Unit Tests
 
 ```bash
 # Run all tests
@@ -359,15 +401,20 @@ The application includes webhook stubs for future integration:
 
 ```
 laserostop_cm/
-├── app/
+├── app/                     # Backend application
 │   ├── __init__.py          # Flask app factory
 │   ├── api.py               # API routes
-│   ├── chat.py              # Chat logic (RAG + GPT-4o)
+│   ├── chat.py              # Chat logic (RAG + GPT-5)
 │   ├── rag.py               # Vector DB and retrieval
 │   ├── asr.py               # Whisper audio transcription
 │   ├── db.py                # Database models
 │   ├── eval.py              # Evaluation framework
 │   └── config.py            # Configuration
+├── frontend/                # Testing interface
+│   ├── index.html           # Main UI
+│   ├── styles.css           # Styling
+│   ├── app.js               # Frontend logic
+│   └── README.md            # Frontend documentation
 ├── data/
 │   ├── raw/                 # Raw datasets
 │   ├── processed/           # Processed datasets
@@ -382,6 +429,7 @@ laserostop_cm/
 │   └── test_eval.py
 ├── requirements.txt
 ├── .env.example
+├── run.py                   # Application entry point
 └── README.md
 ```
 
@@ -395,26 +443,30 @@ laserostop_cm/
 | `DB_URL` | Database URL | `sqlite:///laserostop_cm.db` |
 | `VECTOR_DB_DIR` | Vector store directory | `./vector_store` |
 | `EMBEDDING_MODEL` | Embedding model name | `intfloat/multilingual-e5-base` |
-| `CHAT_MODEL` | OpenAI chat model | `gpt-4o-mini` |
+| `CHAT_MODEL` | OpenAI chat model | `gpt-5-nano-2025-08-07` |
 | `ASR_MODEL` | Whisper model | `whisper-1` |
 | `FLASK_ENV` | Flask environment | `development` |
 
 ### Model Selection
 
-**GPT-4o-mini** (default):
-- Lower cost (~60% cheaper than GPT-4)
-- Faster response times
-- Good for most queries
+**GPT-5-nano** (default - `gpt-5-nano-2025-08-07`):
+- Latest OpenAI model with advanced reasoning
+- Optimized for complex conversations
+- Native Tunisian dialect understanding
+- Uses `max_completion_tokens` instead of `max_tokens`
+- Does not support `temperature` parameter
 
-**GPT-4o** (premium):
-- Higher quality responses
-- Better reasoning
-- Recommended for complex medical disclaimers
-
+**Alternative Models**:
 To switch models, set in `.env`:
 ```bash
+# Use GPT-4o
 CHAT_MODEL=gpt-4o
+
+# Use GPT-4o-mini (lower cost)
+CHAT_MODEL=gpt-4o-mini
 ```
+
+**Note**: The code automatically detects GPT-5 models and adjusts parameters accordingly.
 
 ## Database Schema
 
