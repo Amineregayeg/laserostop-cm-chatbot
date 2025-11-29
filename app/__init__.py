@@ -39,14 +39,10 @@ def create_app() -> Flask:
     from .api import register_routes
     register_routes(app)
 
-    # Initialize database on first request
-    @app.before_request
-    def init_database():
-        """Initialize database tables if they don't exist."""
+    # Initialize database immediately
+    with app.app_context():
         from .db import init_db
         init_db()
-        # Remove this handler after first execution
-        app.before_request_funcs[None].remove(init_database)
 
     return app
 
