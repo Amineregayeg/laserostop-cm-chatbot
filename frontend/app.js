@@ -1,6 +1,18 @@
 // Configuration
 const API_BASE_URL = 'https://laserostop-cm.loca.lt';
 
+// Generate or retrieve persistent session user ID
+function getSessionUserId() {
+    let sessionUserId = sessionStorage.getItem('chatbot_user_id');
+    if (!sessionUserId) {
+        sessionUserId = 'web-user-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        sessionStorage.setItem('chatbot_user_id', sessionUserId);
+    }
+    return sessionUserId;
+}
+
+const SESSION_USER_ID = getSessionUserId();
+
 // State Management
 const state = {
     messages: [],
@@ -205,8 +217,9 @@ async function sendMessage() {
         // Prepare request
         const requestBody = {
             text: userText,
-            user_id: userId || undefined,
-            use_rag: useRAG
+            user_id: userId || SESSION_USER_ID,
+            use_rag: useRAG,
+            use_history: true
         };
 
         addLog('FRONTEND', 'Sending request to backend API', 'info', {
